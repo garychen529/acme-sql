@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css">
+	<title> {{ title }} </title>
+</head>
+<body>
+	<ul class="nav nav-tabs">
+		<li><a href="/"> Home </a></li>
+		{% for cate in categories %}
+		<li {% if %}>
+			
+		</li>
+		{% endfor %}
+	</ul>
+	<div class="container">
+		<div style="margin-top: 10px">
+		{% block content %}
+		
+		{% endblock %}
+		</div>
+	</div>
+</body>
+</html>
