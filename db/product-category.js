@@ -3,23 +3,30 @@ var pgUrl = 'postgres://localhost/acme';
 var Promise = require('bluebird');
 var _db;
 
-function connect() {
-	var promise = new Promise(function(resolve, reject) {
+function connect(cb) {
 		if(_db) {
-			resolve(_db);
+      return cb(_db);
 		}
+
 		var client = new pg.Client(pgUrl);
 
-		client.connect(function(err) {
+		client.connect(function(err, conn) {
 			if(err) {
-				reject(err);
+        throw err;
 			}
-			_db = client;
-			return resolve(_db);
+			_db = conn;
+			cb(_db);
 		});
-	});
+}
 
-	return promise;
+function getCategories(cb){
+  connect(function(conn){
+    conn.query('select * from categories', [], function(err, result){
+      if(err)
+        throw err;
+      cb(result.rows);
+    });
+  });
 }
 
 function addCategory() {
@@ -56,6 +63,7 @@ module.exports = {
 	connect: connect,
 	addCategory: addCategory,
 	getCategory: getCategory,
+  getCategories: getCategories,
 	deleteCategory: deleteCategory,
 	addProduct: addProduct,
 	getProduct: getProduct,

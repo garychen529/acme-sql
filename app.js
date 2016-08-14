@@ -18,8 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));	
 
 app.get('/', function(req, res) {
-	db.getCats()
-	.then(function(categories) {
+	db.getCategories(function(categories){
 		res.render('index', {
 			title: 'Welcome to Acme Categories!',
 			categories: categories
