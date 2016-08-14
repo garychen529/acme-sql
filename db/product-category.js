@@ -26,12 +26,18 @@ function addCategory() {
 
 }
 
-function getCategory(id) {
-	return client.query('select * from categories where id = $1', [id])
+function getCategory(categoryId) {
+	return client.query('select * from categories where id = $1', [categoryId])
+	.then(function(results) {
+		if(results.rows.length > 0) {
+			return results.rows[0];
+		}
+		return null;
+	});
 }
 
-function deleteCategory(id) {
-	return client.query('delete from categories where id = $1', [id]);
+function deleteCategory(categoryId) {
+	return client.query('delete from categories where id = $1', [categoryId]);
 }
 
 function addProduct() {
@@ -42,8 +48,8 @@ function getProduct() {
 
 }
 
-function deleteProduct(id) {
-	return client.query('delete from products where id = $1', [id]);
+function deleteProduct(productId) {
+	return client.query('delete from products where id = $1', [productId]);
 }
 
 module.exports = {
